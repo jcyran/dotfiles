@@ -1,6 +1,6 @@
 require('mason').setup()
 require('mason-lspconfig').setup({
-	ensure_installed = { "lua_ls", "rust_analyzer" }
+	ensure_installed = { "lua_ls", "rust_analyzer", "jsonls", "basedpyright" }
 })
 
 local on_attach = function(_, _)
@@ -14,16 +14,41 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-require("lspconfig").lua_ls.setup {
-	on_attach = on_attach,
-	capabilities = capabilities,
-}
+require("lspconfig").lua_ls.setup {	on_attach = on_attach, capabilities = capabilities, }
 
 
-require("lspconfig").rust_analyzer.setup {
+require("lspconfig").rust_analyzer.setup { on_attach = on_attach, capabilities = capabilities, }
+
+require("lspconfig").jsonls.setup { on_attach = on_attach, capabilities = capabilities, }
+
+-- virtual environment detection
+local get_python_path = function(workspace)
+    if vim.env.VIRTUAL_ENV then
+        return vim.env.VIRTUAL_ENV .. '/bin/python'
+    end
+
+    for _, pattern in ipairs({ 'venv', '.venv', 'env', '.env' }) do
+        local match = vim.fn.glob(workspace .. '/' .. pattern)
+        if match ~= '' then
+          return match .. '/bin/python'
+        end
+    end
+
+    return 'python3'
+end
+
+require("lspconfig").basedpyright.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
+    settings = {
+        basedpyright = {
+            python = {
+                pythonPath = get_python_path(vim.fn.getcwd())
+            }
+        }
+    }
 }
+
 --[[
 require("lspconfig").clangd.setup {
     cmd = { 'clangd', '--background-index', '--clang-tidy' },
