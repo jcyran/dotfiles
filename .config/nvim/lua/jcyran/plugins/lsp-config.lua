@@ -9,12 +9,7 @@ return {
         require('mason-lspconfig').setup({
             ensure_installed = {
                 "lua_ls",
-                "rust_analyzer",
-                "jsonls",
                 "basedpyright",
-                "clangd",
-                "slint_lsp",
-                "vtsls",
             }
         })
 
@@ -27,13 +22,12 @@ return {
         end
 
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        local lspconfig = vim.lsp.config
 
-        require("lspconfig").lua_ls.setup {	on_attach = on_attach, capabilities = capabilities, }
-
-
-        require("lspconfig").rust_analyzer.setup { on_attach = on_attach, capabilities = capabilities, }
-
-        require("lspconfig").jsonls.setup { on_attach = on_attach, capabilities = capabilities, }
+        lspconfig('lua_ls', {
+            on_attach = on_attach,
+            capabilities = capabilities,
+        })
 
         -- virtual environment detection
         local get_python_path = function(workspace)
@@ -51,7 +45,7 @@ return {
             return 'python3'
         end
 
-        require("lspconfig").basedpyright.setup {
+        lspconfig('basedpyright', {
             on_attach = on_attach,
             capabilities = capabilities,
             settings = {
@@ -61,19 +55,6 @@ return {
                     }
                 }
             }
-        }
-
-        require("lspconfig").clangd.setup {
-            cmd = { 'clangd', '--background-index', '--clang-tidy' },
-            on_attach = on_attach,
-            capabiliteis = capabilities,
-        }
-
-        require("lspconfig").slint_lsp.setup({
-            filetypes = { "slint" },
-            -- root_dir = lspconfig.util.root_pattern(".git", "Cargo.toml"),
         })
-
-        require("lspconfig").vtsls.setup { on_attach = on_attach, capabilities = capabilities, }
     end
 }
