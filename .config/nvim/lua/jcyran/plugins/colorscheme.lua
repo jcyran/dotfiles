@@ -1,5 +1,6 @@
 return {
     "sainnhe/gruvbox-material",
+    name = "gruvbox material",
     config = function()
         vim.cmd([[let g:gruvbox_material_background = "medium"]])
         vim.cmd([[colorscheme gruvbox-material]])
