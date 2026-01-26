@@ -122,12 +122,22 @@ export EDITOR='nvim'
 
 # reverse-search using fzf
 fzf_history() {
-    local selected=$(fc -ln 1 | awk '!seen[$0]++;' | awk '{$1=$1};1' | fzf --no-sort --height ~60% --layout reverse --tac)
+    local selected=$(fc -ln 1 | awk '!seen[$0]++;' | awk '{$1=$1};1' | \
+        fzf --no-sort --height ~60% --layout reverse --tac)
 
     if [[ -n selected ]]; then
         READLINE_LINE="$selected"
         READLINE_POINT=${#selected}
     fi
+}
+
+# git checkout using fzf
+fgitcheck() {
+    git rev-parse --is-inside-work-tree >/dev/null || return
+    local selected=$(git for-each-ref --format='%(refname:short)' refs/heads | \
+        fzf --height 30% --layout reverse)
+
+    git checkout $selected
 }
 
 bind -x '"\C-R": fzf_history'
