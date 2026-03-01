@@ -122,8 +122,8 @@ export EDITOR='nvim'
 
 # reverse-search using fzf
 fzf_history() {
-    local selected=$(fc -ln 1 | awk '!seen[$0]++;' | awk '{$1=$1};1' | \
-        fzf --no-sort --height ~60% --layout reverse --tac)
+    local selected=$(fc -ln 1 | sed 's/^\s\+//;1!G;h;$!d' | \
+        fzf --no-sort --height ~60% --layout reverse)
 
     if [[ -n selected ]]; then
         READLINE_LINE="$selected"
