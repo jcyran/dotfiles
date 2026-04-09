@@ -1,5 +1,5 @@
 require("jcyran.config.set")
 require("jcyran.config.remap")
 require("jcyran.config.colors")
-require("jcyran.config.filetype")
 require("jcyran.config.clip")
+require("jcyran.config.statusline")

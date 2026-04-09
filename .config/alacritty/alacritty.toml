@@ -1,3 +1,6 @@
+[terminal]
+shell = { program = "wsl", args = ["~"] }
+
 [colors.bright]
 black = "0x504945"
 red = "0xea6962"
@@ -33,15 +36,15 @@ TERM = "xterm-256color"
 size = 14.0
 
 [font.bold]
-family = "JetBrainsMono NL Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "bold"
 
 [font.italic]
-family = "JetBrainsMono NL Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "bold"
 
 [font.normal]
-family = "JetBrainsMono NL Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "Regular"
 
 [font.offset]
@@ -53,7 +56,6 @@ history = 5000
 
 [window]
 title = "Alacritty"
-# opacity = 0.9
 
 [window.class]
 general = "Alacritty"

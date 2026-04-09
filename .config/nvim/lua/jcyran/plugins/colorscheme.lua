@@ -10,7 +10,7 @@ return {
             return vim.api.nvim_get_hl(0, { name = group_name})[attribute]
         end
 
-        local mode_bg = get_hl_color("Statement", "fg")
+        local mode_bg = get_hl_color("Normal", "fg")
         local branch_bg = get_hl_color("String", "fg")
         local box_text_color = get_hl_color("Normal", "bg") or 0x1E1E2E
 
