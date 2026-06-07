@@ -1,13 +1,5 @@
 # bash_prompt
 
-get_git_branch() {
-    local branch=$(git branch --show-current 2>/dev/null)
-
-    if [ -n "$branch" ]; then
-        echo " git:($branch)"
-    fi
-}
-
 BLACK="\[\e[30m\]"
 RED="\[\e[31m\]"
 GREEN="\[\e[32m\]"
@@ -18,4 +10,32 @@ CYAN="\[\e[36m\]"
 WHITE="\[\e[37m\]"
 RESET="\[\e[0m\]"
 
-PS1="┌$PURPLE\u $YELLOW\w$GREEN\$(get_git_branch)\n$RESET└─$BLUE>$RESET "
+get_git_branch() {
+    local branch=$(git branch --show-current 2>/dev/null)
+
+    if [ -z "$branch" ]; then
+        return
+    fi
+
+    local symbols=""
+
+    if ! git diff --quiet 2>/dev/null; then
+        symbols+="*"
+    fi
+
+    if ! git diff --cached --quiet 2>/dev/null; then
+        symbols+="+"
+    fi
+
+    if [ -n "$(git ls-files --others --exclude-standard 2>/dev/null)" ]; then
+        symbols+="?"
+    fi
+
+    if [ -n "$symbols" ]; then
+        echo "  $branch ($symbols)"
+    else
+        echo "  $branch"
+    fi
+}
+
+PS1="┌${PURPLE}\u ${YELLOW}\w${GREEN}\$(get_git_branch)\n${RESET}└─${BLUE}>${RESET} "
