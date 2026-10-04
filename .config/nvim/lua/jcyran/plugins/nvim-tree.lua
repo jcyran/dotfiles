@@ -1,5 +1,6 @@
 return {
     "nvim-tree/nvim-tree.lua",
+    version = "1.18.0",
     dependencies = {
         "nvim-tree/nvim-web-devicons",
     },
@@ -13,7 +14,8 @@ return {
                 sorter = "case_sensitive",
             },
             view = {
-                width = 25,
+                width = 45,
+                side = "right",
             },
             renderer = {
                 group_empty = true,
@@ -23,6 +25,23 @@ return {
             },
         })
 
-        vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<cr>", {})
+        local function toggle_or_focus_tree()
+            local api = require("nvim-tree.api")
+
+            if api.tree.is_visible() then
+                if vim.bo.filetype == "NvimTree" then
+                    api.tree.close()
+                else
+                    api.tree.focus()
+                end
+            else
+                api.tree.open()
+            end
+        end
+
+        vim.keymap.set("n", "<C-n>", toggle_or_focus_tree, { desc = "Toggle or Focus NvimTree" })
+
+        -- Default keymap
+        -- vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<cr>", {})
     end
 }

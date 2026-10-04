@@ -1,8 +1,15 @@
 return {
     "neovim/nvim-lspconfig",
+    version = "2.12.0",
     dependencies = {
-        "mason-org/mason.nvim",
-		"mason-org/mason-lspconfig.nvim",
+        {
+            "mason-org/mason.nvim",
+            version = "2.3.1",
+        },
+        {
+            "mason-org/mason-lspconfig.nvim",
+            version = "2.3.0",
+        },
     },
     config = function()
         require("mason").setup()
@@ -10,7 +17,8 @@ return {
             ensure_installed = {
                 "lua_ls",
                 "pyright",
-                "rust_analyzer",
+                "yamlls",
+                "ansiblels",
             }
         })
 
@@ -64,15 +72,22 @@ return {
             root_markers = { ".venv" },
         })
 
-        lspconfig("rust_analyzer", {
+        lspconfig("yamlls", {
             capabilities = capabilities,
-            filetypes = { "rust" },
+            filetypes = { "yaml" },
+        })
+
+        lspconfig("ansiblels", {
+            capabilities = capabilities,
+            filetypes = { "yaml.ansible", "ansible" },
+            root_markers = { "roles", "playbooks", "ansible.cfg", ".git" },
         })
 
         vim.lsp.enable({
             "lua_ls",
             "pyright",
-            "rust_analyzer",
+            "yamlls",
+            "ansiblels",
         })
     end
 }

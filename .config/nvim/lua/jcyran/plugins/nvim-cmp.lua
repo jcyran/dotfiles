@@ -1,14 +1,15 @@
 return {
     "hrsh7th/nvim-cmp",
+    version = "0.0.2",
     event = "InsertEnter",
     dependencies = {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-cmdline",
-        "L3MON4D3/LuaSnip",
+        { "L3MON4D3/LuaSnip", version = "2.5.0" },
         "saadparwaiz1/cmp_luasnip",
-        "windwp/nvim-autopairs",
+        { "windwp/nvim-autopairs", version = "0.11.0" },
     },
     config = function()
         local cmp = require("cmp")
