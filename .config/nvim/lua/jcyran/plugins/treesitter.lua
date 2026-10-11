@@ -8,6 +8,7 @@ local my_parsers = {
     "lua",
     "python",
     "yaml",
+    "json",
     "bash",
 }
 
