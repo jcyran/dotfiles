@@ -1,2 +1,2 @@
 require("jcyran.config")
-require("jcyran.lazy")
+require("jcyran.plugins")

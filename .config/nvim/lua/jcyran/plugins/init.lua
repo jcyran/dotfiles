@@ -1,0 +1,7 @@
+require("jcyran.plugins.nvim-tree")
+require("jcyran.plugins.colorscheme")
+require("jcyran.plugins.fzf")
+require("jcyran.plugins.markdown-preview")
+require("jcyran.plugins.treesitter")
+require("jcyran.plugins.blink-cmp")
+require("jcyran.plugins.lsp-config")
